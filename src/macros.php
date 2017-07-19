@@ -49,6 +49,37 @@ if (! Builder::hasMacro('aroundLatLng')) {
     });
 }
 
+if (! Builder::hasMacro('aroundLatLngViaIP')) {
+    /**
+     * Search for entries around a given location based on the visitor's ip address.
+     *
+     * @see https://www.algolia.com/doc/guides/geo-search/geo-search-overview/
+     *
+     *
+     * @return Laravel\Scout\Builder
+     */
+    Builder::macro('aroundLatLng', function () {
+        $callback = $this->callback;
+
+        $this->callback = function ($algolia, $query, $options) use ($callback) {
+            $options['aroundLatLngViaIP'] = $_SERVER['REMOTE_ADDR'];
+
+            if ($callback) {
+                return call_user_func(
+                    $callback,
+                    $algolia,
+                    $query,
+                    $options
+                );
+            }
+
+            return $algolia->search($query, $options);
+        };
+
+        return $this;
+    });
+}
+
 if (! Builder::hasMacro('with')) {
     /**
      * Override the algolia search options to give you full control over the request,
