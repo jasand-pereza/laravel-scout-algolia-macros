@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\ScoutMacros;
+namespace JasandPereza\ScoutMacros;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
