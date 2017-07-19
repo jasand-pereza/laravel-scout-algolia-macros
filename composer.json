@@ -23,13 +23,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Algolia\\ScoutMacros\\": "src"
+            "JasandPereza\\ScoutMacros\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Algolia\\ScoutMacros\\ServiceProvider"
+                "JsaandPereza\\ScoutMacros\\ServiceProvider"
             ]
         }
     }
