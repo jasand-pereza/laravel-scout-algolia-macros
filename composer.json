@@ -1,6 +1,6 @@
 {
-    "name": "algolia/laravel-scout-algolia-macros",
-    "description": "A collection macros to extend Laravel Scout with more Algolia capabilities",
+    "name": "jasand-pereza/laravel-scout-algolia-macros",
+    "description": "A collection of macros to extend Laravel Scout with more Algolia capabilities",
     "keywords": [
         "algolia",
         "laravel-scout",
