@@ -29,7 +29,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "JsaandPereza\\ScoutMacros\\ServiceProvider"
+                "JasandPereza\\ScoutMacros\\ServiceProvider"
             ]
         }
     }
