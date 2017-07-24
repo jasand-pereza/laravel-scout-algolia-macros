@@ -48,7 +48,6 @@ if (! Builder::hasMacro('aroundLatLng')) {
         return $this;
     });
 }
-echo 'test'; exit;
 if (! Builder::hasMacro('with')) {
     /**
      * Override the algolia search options to give you full control over the request,
