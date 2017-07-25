@@ -46,7 +46,7 @@ if (! Builder::hasMacro('aroundLatLng')) {
                 $filter_string.= ')';
                 
                 if(count($employees_sizes) > 0) {
-                    $filter_string.= 'OR (';
+                    $filter_string.= ' AND (';
                     $inc = 0;
                     foreach($employees_sizes as $s) {
                         $filter_string.= 'employees_size_filter:"'.$s.'"';
