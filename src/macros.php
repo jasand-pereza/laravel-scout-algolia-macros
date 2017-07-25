@@ -27,12 +27,39 @@ if (! Builder::hasMacro('aroundLatLng')) {
      *
      * @return Laravel\Scout\Builder
      */
-    Builder::macro('aroundLatLng', function ($lat, $lng) {
+    Builder::macro('aroundLatLng', function ($lat, $lng, $radius=null, $service=null, $employees_sizes) {
         $callback = $this->callback;
-
-        $this->callback = function ($algolia, $query, $options) use ($lat, $lng, $callback) {
+        $this->callback = function ($algolia, $query, $options) use ($lat, $lng, $radius, $service, $employees_sizes, $callback) {
             $options['aroundLatLng'] = (float) $lat . ',' . (float) $lng;
-
+            
+            if(!is_null($radius)) {
+                $options['aroundRadius'] = round($radius * 1609.344); // meters
+            }
+            $filter_string = '(';
+            if(!is_null($service)) {
+                for($i=1; $i <= 10; $i++) {
+                    $filter_string .= 'service'.$i.':"'.$service.'"';
+                    if($i !== 10) {
+                        $filter_string.=' OR ';
+                    }
+                }
+                $filter_string.= ')';
+                
+                if(count($employees_sizes) > 0) {
+                    $filter_string.= 'OR (';
+                    $inc = 0;
+                    foreach($employees_sizes as $s) {
+                        $filter_string.= 'employees_size_filter:"'.$s.'"';
+                        if($inc != count($employees_sizes)-1) {
+                            $filter_string.= ' OR ';
+                        }
+                        $inc++;
+                    }
+                    $filter_string.= ')';  
+                    
+                }
+                $options['filters'] = $filter_string;
+            }
             if ($callback) {
                 return call_user_func(
                     $callback,
