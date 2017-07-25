@@ -35,8 +35,9 @@ if (! Builder::hasMacro('aroundLatLng')) {
             if(!is_null($radius)) {
                 $options['aroundRadius'] = round($radius * 1609.344); // meters
             }
-            $filter_string = '(';
+            
             if(!is_null($service)) {
+                $filter_string = '(';
                 for($i=1; $i <= 10; $i++) {
                     $filter_string .= 'service'.$i.':"'.$service.'"';
                     if($i !== 10) {
@@ -56,9 +57,23 @@ if (! Builder::hasMacro('aroundLatLng')) {
                         $inc++;
                     }
                     $filter_string.= ')';  
-                    
                 }
                 $options['filters'] = $filter_string;
+            } else {
+                 if(count($employees_sizes) > 0) {
+                    $filter_string = '(';
+                    $inc = 0;
+                    foreach($employees_sizes as $s) {
+                        $filter_string.= 'employees_size_filter:"'.$s.'"';
+                        if($inc != count($employees_sizes)-1) {
+                            $filter_string.= ' OR ';
+                        }
+                        $inc++;
+                    }
+                    $filter_string.= ')';  
+                    $options['filters'] = $filter_string;
+
+                }
             }
             if ($callback) {
                 return call_user_func(
